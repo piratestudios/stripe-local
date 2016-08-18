@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "axios": "0.13.1",
+    "minimist": "1.2.0",
     "stripe": "4.9.0"
   },
   "babel": {
