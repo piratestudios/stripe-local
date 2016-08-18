@@ -1,7 +1,7 @@
 {
   "name": "stripe-local",
   "version": "0.1.0",
-  "description": "A library for testing Stripe webhooks locally",
+  "description": "For receiving Stripe webhooks locally",
   "author": "Jason Maurer",
   "license": "MIT",
   "homepage": "https://github.com/jsonmaur/stripe-local#readme",
