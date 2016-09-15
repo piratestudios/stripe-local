@@ -7,6 +7,7 @@ module.exports = (opts = {}) => {
   assert(opts.secretKey, 'Must pass your Stripe secret key!')
   assert(opts.webhookUrl, 'Must pass a webhook URL!')
 
+  opts.quiet = opts.quiet || false
   opts.interval = opts.interval
     ? parseInt(opts.interval, 10)
     : 5000
@@ -18,7 +19,7 @@ module.exports = (opts = {}) => {
     timeout: 5000
   })
 
-  let lastTimestamp = currentTimeStamp()
+  let lastTimestamp = currentTimeStamp() - (opts.interval / 1000)
   setInterval(() => {
     stripe.events.list({
       created: {
@@ -30,7 +31,12 @@ module.exports = (opts = {}) => {
       lastTimestamp = currentTimeStamp()
       Promise.all(evts.data.map(evt => {
         return stripe.events.retrieve(evt.id)
-          .then(data => request.post(opts.webhookUrl, data))
+          .then(data => {
+            !opts.quiet && console.log(`Received Stripe Event: ${evt.id}`)
+
+            return request.post(opts.webhookUrl, data)
+              .then(res => !opts.quiet && console.log(res.data))
+          })
       })).catch(err => console.error(err))
     })
   }, opts.interval)

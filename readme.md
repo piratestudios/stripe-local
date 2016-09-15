@@ -58,6 +58,11 @@ if (process.env.NODE_ENV === 'development') {
   > Type: number  
   > Default: `5000` (5s)
 
+- `quiet` Whether to hide all logged messages.
+
+  > Type: boolean  
+  > Default: `false`
+
 ## Todo
 
 - [ ] Store requests so we can monitor their statuses
