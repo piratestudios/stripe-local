@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 
 ### Using Docker
 
-If you want a quick and easy way to get started, use Docker. This image is located at [jsonmaur/stripe-local](https://hub.docker.com/jsonmaur/stripe-local) on Docker Hub. The two required environment variables are `STRIPE_KEY` and `WEBHOOK_URL`.
+If you want a quick and easy way to get started, use Docker. This image is located at [jsonmaur/stripe-local](https://hub.docker.com/r/jsonmaur/stripe-local/) on Docker Hub. The two required environment variables are `STRIPE_KEY` and `WEBHOOK_URL`.
 
 ```bash
 docker run -e "STRIPE_KEY=..." -e "WEBHOOK_URL=..." jsonmaur/stripe-local
