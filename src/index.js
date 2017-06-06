@@ -16,7 +16,11 @@ module.exports = (opts = {}) => {
   const currentTimeStamp = () => Math.floor(Date.now() / 1000)
 
   const request = axios.create({
-    timeout: 5000
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
   })
 
   let lastTimestamp = currentTimeStamp() - (opts.interval / 1000)
