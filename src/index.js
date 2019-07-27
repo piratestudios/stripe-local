@@ -13,6 +13,7 @@ module.exports = (opts = {}) => {
   opts.interval = opts.interval
     ? parseInt(opts.interval, 10)
     : 5000
+  opts.overlap = opts.overlap ? parseInt(opts.overlap, 10) : 2000
 
   const stripe = Stripe(opts.secretKey)
   const currentTimeStamp = () => Math.floor(Date.now() / 1000)
@@ -28,17 +29,24 @@ module.exports = (opts = {}) => {
     }
   })
 
+  let processedEvents = []
+
   let lastTimestamp = currentTimeStamp() - (opts.interval / 1000)
   setInterval(() => {
     stripe.events.list({
       created: {
-        gt: lastTimestamp
+        gt: lastTimestamp - (opts.overlap / 1000)
       }
     }, (err, evts) => {
       if (err) return console.error(err)
 
       lastTimestamp = currentTimeStamp()
-      Promise.all(evts.data.map(evt => {
+      const eventsToProcess = evts.data.filter(evt => !processedEvents.includes(evt.id))
+      if (eventsToProcess.length) {
+        processedEvents.splice(0, processedEvents.length, [...eventsToProcess.map(evt => evt.id)])
+      }
+
+      Promise.all(eventsToProcess.map(evt => {
         return stripe.events.retrieve(evt.id)
           .then(data => {
             !opts.quiet && console.log(`Received Stripe Event: ${evt.id}`)

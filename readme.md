@@ -69,6 +69,11 @@ docker run -e "STRIPE_KEY=..." -e "WEBHOOK_URL=..." jsonmaur/stripe-local
   > Type: number  
   > Default: `5000` (5s)
 
+- `overlap` The amount of time (in milliseconds) to overlap with the last request. Because multiple stripe events can happen per second if there is no overlap some events may be missed.
+  
+  > Type: number
+  > Default: `2000` (2s)
+
 - `quiet` Whether to hide all logged messages.
 
   > Type: boolean  
