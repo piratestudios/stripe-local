@@ -1,6 +1,6 @@
 {
   "name": "stripe-local",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "For receiving Stripe webhooks locally",
   "author": "Jason Maurer",
   "license": "MIT",
